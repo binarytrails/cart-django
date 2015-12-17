@@ -25,9 +25,11 @@ from kedfilms.settings import MOBILE_HOSTS
 from frontend.views import old_browsers
 
 APP = "cart"
+ERRORS = os.path.join(APP, "errors")
+
 MEDIA = settings.MEDIA_URL
 STATIC = os.path.join(settings.STATIC_ROOT, APP)
-ERRORS = os.path.join(APP, "errors")
+APP_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 def is_mobile(request):
     # .mobile -> minidetector.Middleware
@@ -37,7 +39,7 @@ def template_prefix(request):
     return ("-mobile.html" if is_mobile(request) else ".html")
 
 def template_exists(template):
-    return os.path.exists(os.path.join(APP, "templates", template))
+    return os.path.exists(os.path.join(APP_ROOT, "templates", template))
 
 def merge_context(request, new_context=None):
     base_context = {
