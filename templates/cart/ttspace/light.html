@@ -1,0 +1,27 @@
+{% extends PARENT %}
+{% block content %}
+        <meta name="description" content="CART Book Light & Heavy Stylish Pages">
+        <meta name="keywords" content="Thoughts Through Space 1942 CART Light & Heavy Stylish Pages">
+<!--
+        /------------------------\              |~~\_____/~~\__  |
+        |   Hello, there!        |______________ \______====== )-+
+        |   Now, read the book.  |                      ~~~|/~~  |
+        \------------------------/                         ()
+-->
+        {% load static %}
+        {% get_static_prefix as STATIC %}
+
+        <link rel="stylesheet" type="text/css" href="{{ STATIC }}{{ APP }}/ttspace/generic.css">
+        <link rel="stylesheet" type="text/css" href="{{ STATIC }}{{ APP }}/ttspace/light.css">
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:100' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <div id="container">
+            <div id="space"></div>
+            <p id="quote">Harold, do you hear me?</br>I need help...</p>
+            <img id="man" src="{{ STATIC }}{{ APP }}/ttspace/images/logos/human-icon-calm-white.png"/>
+            <a id="switch" href="/cart/ttspace/heavy/"><p>Before</p></a>
+        </div>
+    </body>
+{% endblock %}

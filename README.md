@@ -1,2 +1,1 @@
-# cart
-http://sevaivanov.com/project/cart/home/main/
+Computation Arts projects as django application.

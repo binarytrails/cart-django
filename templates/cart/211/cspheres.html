@@ -1,0 +1,182 @@
+{% extends PARENT %}
+{% block content %}
+        <meta name="description" content="">
+
+        <link type="text/css" rel="stylesheet" href="{{ STATIC }}{{ APP }}/css/content-wo-header-{{ PLATFORM }}-black.css" />
+        <script src="{{ STATIC }}{{ APP }}/libs/jquery-1.9.1.min.js"></script>
+
+        <!-- https://github.com/sevaivanov/short/tree/master/js/meow -->
+        <link type="text/css" rel="stylesheet" href="{{ STATIC }}{{ APP }}/3Dcube/meow.css" />
+        <script src="{{ STATIC }}{{ APP }}/libs/jquery-1.9.1.min.js"></script>
+        <script src="{{ STATIC }}{{ APP }}/libs/showdown-1.2.3.min.js"></script>
+
+        <style type="text/css">
+
+            #container
+            {
+                position: absolute;
+                width: 80%;
+                height: auto;
+                text-align: center;
+                background: white;
+                margin: 0 10%;
+                text-align: center;
+                background: none;
+            }
+                #container .circle
+                {
+                    display: inline-block;
+                    width: 8em;
+                    height: 8em;
+                    border-radius: 8em;
+                    -webkit-border-radius: 8em;
+                    -moz-border-radius: 8em;
+
+                    background: #7E0E9E;
+                    box-shadow: 0 0 20px #7E0E9E;
+
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    background-size: 70%;
+                    background-position: center;
+
+                    margin: 1em;
+                    overflow: hidden;
+
+                    transition: all 1s;
+                    -moz-transition: all 1s;
+                    -webkit-transition: all 1s;
+                    -o-transition: all 1s;
+                    -ms-transition: all 1s;
+                }
+                    #container .far-right:hover
+                    {
+                        width: 8em;
+                        height: 8em;
+                        margin-left: 500em;
+                        border-radius: 20em;
+                    }
+                    #container .giant:hover
+                    {
+                        width: 20em;
+                        height: 20em;
+                        border-radius: 20em;
+                        margin-left: 5em;
+                        background: #8E39A6;
+                    }
+
+        </style>
+        <script type="text/javascript">
+            function meow(title, markdownMessage)
+            {
+                var converter = new showdown.Converter();
+                htmlMessage = converter.makeHtml(markdownMessage);
+
+                $('#meow-head p').html(title);
+                $('#meow-body p').html(htmlMessage);
+                $('#meow-background').fadeIn("fast",function()
+                {
+                    $('#ok-button,#meow-close-button').click(function(){
+                        $('#meow-background').hide();
+                    });
+                });
+            }
+            //alert('dfdf');
+            $(document).ready(function()
+            {
+                // circles
+                for (var i = 0; i < 60; i++)
+                {
+                    if(i % 2){type = "far-right";} else{type = "giant";}
+                    //type = "far-right";
+                    $("#container").append("<div class='circle " + type + "'></div>");
+                };
+
+                // // music init
+                var url = '{{ STATIC }}{{ APP }}/audio/forecast.mp3';
+
+                // var audio = document.createElement('audio');
+                // audio.setAttribute('src', '{{ STATIC }}{{ APP }}/audio/forecast.mp3');
+                // audio.setAttribute('id', 'forecast');
+                // //audio.setAttribute('autoplay', 'autoplay');
+
+                var audioBuffer = null;
+                var context = new AudioContext();
+
+                var request = new XMLHttpRequest();
+                request.open('GET', url, true);
+                request.responseType = 'arraybuffer';
+
+                console.log("request");
+                console.log(request);
+
+                // Decode asynchronously
+                request.onload = function() {
+                    context.decodeAudioData(request.response, function(buffer)
+                    {
+                        // Create offline context
+                        var offlineContext = new OfflineAudioContext(1, buffer.length, buffer.sampleRate);
+
+                        // Create buffer source
+                        var source = offlineContext.createBufferSource();
+                        source.buffer = buffer;
+
+                        // Create filter
+                        var filter = offlineContext.createBiquadFilter();
+                        filter.type = "lowpass";
+
+                        // Pipe the song into the filter, and the filter into the offline context
+                        source.connect(filter);
+                        filter.connect(offlineContext.destination);
+
+                        // Schedule the song to start playing at time:0
+                        source.start(0);
+
+                        // Render the song
+                        offlineContext.startRendering()
+
+                        // Act on the result
+                        offlineContext.oncomplete = function(e) {
+                          // Filtered buffer!
+                          var filteredBuffer = e.renderedBuffer;
+                          console.log("filteredBuffer");
+                          console.log(filteredBuffer);
+                        };
+
+
+
+                        //console.log("audioBuffer");
+                        //console.log(source.buffer);
+                        audioBuffer = buffer;
+                    });
+                }
+                request.send();
+
+                //console.log(request.response);
+
+                //audio.load()
+                //$("#main").append(audio);
+
+                //audio.play();
+            });
+
+            $(document).on(
+            {
+                mouseenter: function ()
+                {
+                    $("#forecast").trigger("play");
+                },
+                mouseleave: function ()
+                {
+                    $("#forecast").trigger("pause");
+                }
+            }, ".circle");
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            <div id="container">
+            </div>
+        </div>
+    </body>
+{% endblock %}
