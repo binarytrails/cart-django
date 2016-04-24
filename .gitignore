@@ -56,13 +56,3 @@ docs/_build/
 # PyBuilder
 target/
 
-# Media
-*.svg
-*.jpg
-*.JPG
-*.jpeg
-*.png
-*.gif
-*.webm
-*.mp3
-*.pdf
