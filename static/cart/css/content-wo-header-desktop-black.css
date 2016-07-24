@@ -1,3 +1,19 @@
+@font-face
+{
+    font-family: Gravity-Book;
+    src: url(/static/frontend/fonts/gravity/Gravity-Book.otf);
+}
+
+@font-face
+{
+    font-family: Gravity-Light;
+    src: url(/static/frontend/fonts/gravity/Gravity-Light.otf);
+}
+
+body
+{
+    font-family: 'Gravity-Book', 'Courier New', sans-serif;
+}
 
 a
 {

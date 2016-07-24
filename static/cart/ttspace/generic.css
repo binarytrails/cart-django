@@ -1,7 +1,19 @@
+@font-face
+{
+    font-family: Gravity-Book;
+    src: url(/static/frontend/fonts/gravity/Gravity-Book.otf);
+}
+
+@font-face
+{
+    font-family: Gravity-Light;
+    src: url(/static/frontend/fonts/gravity/Gravity-Light.otf);
+}
+
 
 body
 {
-    font-family: 'Roboto Slab', sans-serif, Arial;
+    font-family: Gravity-Light, sans-serif, Arial;
     background: black;
 }
 
