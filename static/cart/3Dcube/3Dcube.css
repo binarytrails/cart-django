@@ -1,9 +1,14 @@
-    
+@font-face
+{
+    font-family: Gravity-Book;
+    src: url(/static/frontend/fonts/gravity/Gravity-Book.otf);
+}
+
 body
 {
     min-width: 500px;
     min-height: 500px;
-    font-family: 'Roboto Slab';
+    font-family: 'Gravity-Book';
 }
 
     #container
